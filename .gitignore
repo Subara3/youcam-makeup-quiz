@@ -1,0 +1,10 @@
+node_modules/
+.yc-profile/
+.yc-state.json
+youcam_key.txt
+LOGIN_DONE
+_*.mjs
+_*.png
+
+# 元データ（ルートの素材原本。サイトは assets/ images/ を使用）
+/*.jpg
