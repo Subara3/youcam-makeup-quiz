@@ -70,6 +70,11 @@ b{font-weight:700}
   margin:1.2em auto 0;max-width:30em;color:var(--ink-soft);
   font-size:clamp(.9rem,2.5vw,1rem);line-height:1.95;font-weight:500;
 }
+.rule{
+  margin:1.1em auto 0;max-width:26em;font-size:.84rem;font-weight:700;
+  color:var(--blue-dark);background:var(--blue-soft);border-radius:14px;
+  padding:.7em 1.1em;line-height:1.65;
+}
 
 /* ---- hero ---- */
 .hero{margin:clamp(20px,5vw,30px) auto;text-align:center;max-width:330px}
@@ -117,15 +122,16 @@ b{font-weight:700}
 .qbar span{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,#03ADE2,#27C7F0);transition:right .4s ease-out;border-radius:var(--r-pill)}
 .qprompt{margin-top:.8em;font-size:clamp(1.05rem,3.4vw,1.3rem);font-weight:900;text-align:center}
 .qprompt b{color:var(--blue-dark)}
+.qnote{margin-top:.35em;text-align:center;font-size:.76rem;color:var(--ink-soft);font-weight:500}
 
 .face{margin:0 auto clamp(14px,3vw,20px);max-width:300px}
 .face-frame{
   position:relative;border-radius:var(--r-card);overflow:hidden;
-  background:#eef1f3;box-shadow:var(--shadow);aspect-ratio:3/4;
+  background:#eef1f3;box-shadow:var(--shadow);
 }
 .face-frame::after{display:none}
-/* 全画像を縦3:4に統一。全面フィット（はみ出し・レターボックスなし） */
-.face-frame img{display:block;width:100%;height:100%;object-fit:cover;background:#eef1f3}
+/* 画像は元の縦横比のまま全体表示（クレジットも切らない・はみ出し/レターボックスなし） */
+.face-frame img{display:block;width:100%;height:auto;background:#eef1f3}
 .face-credit{margin-top:.6em;text-align:center;font-size:.72rem;color:var(--ink-soft);font-weight:500}
 .face-credit a{font-weight:700}
 .face-badge{
