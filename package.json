@@ -1,0 +1,11 @@
+{
+  "name": "youcam-makeup-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "細かすぎて伝わらないメイク当てクイズ（YouCam makeup-vto 連携）",
+  "scripts": {
+    "params": "node generate.mjs --params",
+    "generate": "node generate.mjs"
+  }
+}

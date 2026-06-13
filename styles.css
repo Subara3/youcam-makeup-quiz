@@ -1,0 +1,189 @@
+/* =============================================================
+   細かすぎて伝わらないメイク当てクイズ ── YouCam ブランド調
+   #03ADE2 シアン / #F5F5F5 グレー / 白カード / ピル型ボタン / Noto Sans JP
+   ============================================================= */
+:root{
+  --bg:#F2F5F7;
+  --card:#FFFFFF;
+  --ink:#152330;
+  --ink-soft:#5E6E79;
+  --blue:#03ADE2;
+  --blue-dark:#0398C8;
+  --blue-soft:#E6F8FE;
+  --gold:#F6A823;
+  --ok:#16B364;
+  --ng:#F0435C;
+  --line:#E5EAEE;
+  --shadow:0 12px 34px -16px rgba(20,50,70,.28);
+  --shadow-sm:0 4px 14px -8px rgba(20,50,70,.25);
+  --r-card:22px;
+  --r-pill:999px;
+  --sans:"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  --disp:"Poppins","Noto Sans JP",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);color:var(--ink);background:var(--bg);
+  line-height:1.7;min-height:100dvh;display:flex;flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--blue-dark);text-underline-offset:2px}
+a:hover{color:var(--blue)}
+b{font-weight:700}
+.grain{display:none}
+
+.stage{position:relative;z-index:1;width:100%;max-width:660px;margin:0 auto;padding:clamp(14px,4vw,28px) clamp(14px,4vw,28px) 30px;flex:1}
+
+/* ---- ブランドヘッダー ---- */
+.brand{display:flex;align-items:center;gap:.6em;justify-content:center;margin:6px 0 clamp(16px,4vw,26px)}
+.brand-logo{
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#03ADE2,#27C7F0);color:#fff;font-size:18px;
+  box-shadow:0 6px 16px -6px rgba(3,173,226,.6);
+}
+.brand-name{font-weight:700;font-size:.92rem;letter-spacing:.01em}
+.brand-name small{display:block;font-size:.66rem;font-weight:500;color:var(--ink-soft);letter-spacing:.04em}
+
+/* ---- screen 切替 ---- */
+.screen{display:none;animation:rise .45s cubic-bezier(.2,.7,.3,1) both}
+.screen.is-active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---- 見出し ---- */
+.masthead{text-align:center;margin-bottom:clamp(16px,4vw,26px)}
+.kicker{
+  display:inline-block;font-family:var(--sans);font-weight:700;
+  font-size:.72rem;letter-spacing:.14em;color:var(--blue-dark);
+  background:var(--blue-soft);padding:.45em 1em;border-radius:var(--r-pill);
+}
+.title{margin-top:.7em;line-height:1.12}
+.title-en{
+  display:block;font-family:var(--disp);font-weight:700;font-style:normal;
+  font-size:clamp(1.1rem,4vw,1.5rem);color:var(--blue);letter-spacing:.01em;
+}
+.title-jp{
+  display:block;font-family:var(--sans);font-weight:900;
+  font-size:clamp(1.7rem,7vw,2.6rem);margin-top:.1em;letter-spacing:.01em;
+}
+.lede{
+  margin:1.2em auto 0;max-width:30em;color:var(--ink-soft);
+  font-size:clamp(.9rem,2.5vw,1rem);line-height:1.95;font-weight:500;
+}
+
+/* ---- hero ---- */
+.hero{margin:clamp(20px,5vw,30px) auto;text-align:center;max-width:330px}
+.hero-frame{
+  position:relative;border-radius:var(--r-card);overflow:hidden;
+  background:var(--card);box-shadow:var(--shadow);
+}
+.hero-frame::after{display:none}
+.hero-frame img{display:block;width:100%}
+.hero figcaption{margin-top:1em;font-size:.82rem;color:var(--ink-soft);font-weight:500}
+
+/* ---- controls ---- */
+.controls{text-align:center;margin-top:clamp(18px,5vw,30px)}
+.len-label{display:block;font-size:.74rem;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.7em;font-weight:700}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:4px;margin-bottom:1.5em;box-shadow:var(--shadow-sm)}
+.seg-btn{
+  font-family:var(--sans);font-size:.85rem;font-weight:700;
+  padding:.5em 1.15em;background:transparent;color:var(--ink-soft);
+  border:0;border-radius:var(--r-pill);cursor:pointer;transition:all .2s ease-out;
+}
+.seg-btn.is-on{background:var(--blue);color:#fff;box-shadow:0 4px 12px -4px rgba(3,173,226,.6)}
+.seg-btn:not(.is-on):hover{color:var(--ink)}
+
+/* ---- CTA（ピル） ---- */
+.cta{
+  font-family:var(--sans);font-weight:700;font-size:1.02rem;letter-spacing:.02em;
+  display:inline-block;padding:.85em 2.6em;cursor:pointer;border:none;border-radius:var(--r-pill);
+  color:#fff;background:var(--blue);box-shadow:0 10px 24px -10px rgba(3,173,226,.7);
+  transition:transform .2s ease-out,background .2s ease-out,box-shadow .2s ease-out;
+}
+.cta:hover{transform:translateY(-2px);background:var(--blue-dark);box-shadow:0 16px 30px -12px rgba(3,173,226,.75)}
+.cta:active{transform:translateY(0)}
+.cta-sm{font-size:.92rem;padding:.7em 2em}
+.cta-ghost{background:#fff;color:var(--blue-dark);border:1.5px solid var(--blue);box-shadow:none}
+.cta-ghost:hover{background:var(--blue);color:#fff}
+
+.credit{margin-top:1.6em;text-align:center;font-size:.82rem;color:var(--ink-soft);line-height:1.85;font-weight:500}
+.credit .tiny{display:block;font-size:.74rem;opacity:.9}
+
+/* ============ QUIZ ============ */
+.quiz-top{margin-bottom:clamp(12px,3vw,18px)}
+.qmeta{display:flex;align-items:center;gap:.7em;font-size:.8rem;color:var(--ink-soft);font-weight:700}
+.qcount b,.qscore b{color:var(--blue-dark);font-family:var(--disp)}
+.qbar{flex:1;height:6px;background:#E3E9ED;border-radius:var(--r-pill);position:relative;overflow:hidden}
+.qbar span{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,#03ADE2,#27C7F0);transition:right .4s ease-out;border-radius:var(--r-pill)}
+.qprompt{margin-top:.8em;font-size:clamp(1.05rem,3.4vw,1.3rem);font-weight:900;text-align:center}
+.qprompt b{color:var(--blue-dark)}
+
+.face{margin:0 auto clamp(14px,3vw,20px);max-width:300px}
+.face-frame{
+  position:relative;border-radius:var(--r-card);overflow:hidden;
+  background:var(--card);box-shadow:var(--shadow);
+}
+.face-frame::after{display:none}
+.face-frame img{display:block;width:100%;height:auto;aspect-ratio:825/1024;object-fit:cover;background:#e9eef1}
+.face-badge{
+  position:absolute;right:10px;bottom:10px;z-index:2;
+  font-size:.56rem;font-weight:700;letter-spacing:.08em;
+  color:#fff;background:rgba(21,35,48,.6);padding:.4em .7em;border-radius:var(--r-pill);backdrop-filter:blur(3px);
+}
+
+/* ---- 4択 ---- */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{
+  position:relative;text-align:left;cursor:pointer;
+  background:var(--card);border:1.5px solid var(--line);border-radius:16px;
+  padding:.9em 1em;font-family:var(--sans);font-size:.9rem;line-height:1.5;color:var(--ink);font-weight:500;
+  transition:transform .15s ease-out,border-color .15s ease-out,box-shadow .15s ease-out;
+}
+.choice:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:var(--shadow-sm)}
+.choice:disabled{cursor:default}
+.choice .mark{position:absolute;top:.5em;right:.6em;font-family:var(--disp);font-size:1.05rem;font-weight:700}
+.choice.is-correct{border-color:var(--ok);background:#EAF8F0}
+.choice.is-correct .mark{color:var(--ok)}
+.choice.is-wrong{border-color:var(--ng);background:#FDECEF}
+.choice.is-wrong .mark{color:var(--ng)}
+.choice.dim{opacity:.5}
+
+/* ---- reveal ---- */
+.reveal{margin-top:clamp(14px,3vw,20px);background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:1.2em 1.2em 1.4em;text-align:center;box-shadow:var(--shadow-sm);animation:rise .3s ease-out both}
+.reveal-verdict{font-family:var(--disp);font-weight:700;font-size:1.35rem}
+.reveal-verdict.ok{color:var(--ok)}.reveal-verdict.ng{color:var(--ng)}
+.reveal-answer{margin-top:.3em;font-weight:700;font-size:1.02rem;line-height:1.6}
+.reveal-note{margin:.7em auto 0;max-width:30em;color:var(--ink-soft);font-size:.86rem;line-height:1.8;font-weight:500}
+
+/* ---- メイクパラメータ表示 ---- */
+.params{margin:1.1em 0 .2em;text-align:left}
+.params-head{font-size:.74rem;font-weight:700;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:.6em;display:flex;align-items:center;gap:.5em}
+.params-head::before{content:"";width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#03ADE2,#27C7F0);display:inline-block}
+.param{display:flex;align-items:center;gap:.6em;padding:.4em 0;border-top:1px solid var(--line);font-size:.84rem}
+.param:first-of-type{border-top:none}
+.param .dot{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.param .pcat{font-weight:700;min-width:5.5em}
+.param .pval{color:var(--ink-soft);font-family:var(--disp);font-size:.78rem}
+.param .pbar{flex:1;height:5px;background:#EAEFF2;border-radius:var(--r-pill);overflow:hidden;max-width:90px;margin-left:auto}
+.param .pbar i{display:block;height:100%;background:var(--blue);border-radius:var(--r-pill)}
+.reveal .cta{margin-top:1.2em}
+
+/* ============ RESULT ============ */
+.result-score{text-align:center;font-size:1.05rem;margin-top:.3em;font-weight:500}
+.result-score b{font-family:var(--disp);font-weight:700;font-size:3rem;color:var(--blue);vertical-align:-.06em;margin-right:.08em}
+.result-msg{margin:1.1em auto 0;max-width:28em;text-align:center;color:var(--ink-soft);line-height:1.9;font-size:.94rem;font-weight:500}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:1.8em}
+#result-rank{color:var(--blue-dark)}
+
+/* ---- footer ---- */
+.site-foot{
+  position:relative;z-index:1;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5em;
+  max-width:660px;margin:20px auto 0;padding:16px clamp(14px,4vw,28px) 26px;
+  font-size:.72rem;color:var(--ink-soft);font-weight:500;
+}
+
+@media (max-width:430px){
+  .choices{gap:8px}
+  .choice{font-size:.85rem;padding:.8em .8em}
+}

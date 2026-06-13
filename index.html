@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>細かすぎて伝わらないメイク当てクイズ｜YouCam</title>
+<meta name="description" content="同じ顔・同じ会議室。でも今日の“細かすぎるあるある”は人それぞれ。メイクから当てる4択クイズ。地味ハロウィン的あるある50問超。" />
+<meta property="og:title" content="細かすぎて伝わらないメイク当てクイズ" />
+<meta property="og:description" content="その人にいま起きている“細かすぎるあるある”を、メイクから当てる4択クイズ。" />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<main id="app" class="stage">
+
+  <div class="brand">
+    <span class="brand-logo">💄</span>
+    <span class="brand-name">細かすぎて伝わらないメイク当てクイズ<small>Powered by YouCam Online Editor</small></span>
+  </div>
+
+  <!-- ============ TITLE ============ -->
+  <section id="screen-title" class="screen is-active">
+    <header class="masthead">
+      <span class="kicker">細かすぎて伝わらない</span>
+      <h1 class="title">
+        <span class="title-en">What's going on?</span>
+        <span class="title-jp">メイク当てクイズ</span>
+      </h1>
+      <p class="lede">
+        同じ顔。でも、心の中ではいろいろ起きている。<br />
+        地味ハロウィン的な “今日のあるある” を、その人はメイクにそっと忍ばせている。<br />
+        さあ、この人にいま起きている<b>細かすぎる出来事</b>は、どれ？
+      </p>
+    </header>
+
+    <figure class="hero">
+      <div class="hero-frame"><img id="hero-img" src="assets/scene_meeting.jpg" alt="" /></div>
+      <figcaption>同じ会議。同じ人。でも抱えてる“あるある”は、それぞれ違う。</figcaption>
+    </figure>
+
+    <div class="controls">
+      <label class="len-label">出題数</label>
+      <div class="seg" id="len-seg" role="radiogroup" aria-label="出題数">
+        <button class="seg-btn" data-len="5">5問</button>
+        <button class="seg-btn is-on" data-len="10">10問</button>
+        <button class="seg-btn" data-len="56">全56問</button>
+      </div>
+      <button id="start-btn" class="cta">はじめる</button>
+    </div>
+
+    <p class="credit">
+      メイク加工は <a id="yc-link-1" href="https://yce.perfectcorp.com/ja?affiliate=zennfes_spring_2026" target="_blank" rel="noopener">YouCam オンラインエディター</a> で。
+      <span class="tiny">自分の顔写真でも“今日の気分メイク”が試せます。</span>
+    </p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-top">
+      <div class="qmeta">
+        <span class="qcount"><b id="q-now">1</b> / <span id="q-total">10</span></span>
+        <div class="qbar"><span id="q-bar"></span></div>
+        <span class="qscore">正解 <b id="q-score">0</b></span>
+      </div>
+      <p class="qprompt"><b id="face-situation">会議中</b>のこの人、いま<b>どの状況</b>？</p>
+    </div>
+
+    <figure class="face">
+      <div class="face-frame">
+        <img id="face-img" alt="シチュエーション写真" />
+        <span class="face-badge" id="face-badge">RETOUCH&nbsp;by&nbsp;YouCam</span>
+      </div>
+    </figure>
+
+    <div id="choices" class="choices"><!-- 4択カード --></div>
+
+    <div id="reveal" class="reveal" hidden>
+      <p class="reveal-verdict" id="reveal-verdict"></p>
+      <p class="reveal-answer" id="reveal-answer"></p>
+      <p class="reveal-note" id="reveal-note"></p>
+      <div class="params" id="reveal-params"></div>
+      <button id="next-btn" class="cta cta-sm">次へ</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="screen-result" class="screen">
+    <header class="masthead">
+      <span class="kicker">RESULT</span>
+      <h2 class="title"><span class="title-jp" id="result-rank">　</span></h2>
+    </header>
+    <p class="result-score"><b id="result-num">0</b> <span id="result-den">/ 10</span> 問 正解</p>
+    <p class="result-msg" id="result-msg"></p>
+
+    <div class="result-actions">
+      <button id="replay-btn" class="cta">もう一度</button>
+      <a id="share-btn" class="cta cta-ghost" href="#" target="_blank" rel="noopener">結果をシェア</a>
+    </div>
+    <p class="credit">
+      自分の顔でも遊べる。
+      <a id="yc-link-2" href="https://yce.perfectcorp.com/ja?affiliate=zennfes_spring_2026" target="_blank" rel="noopener">YouCam で“今日の気分メイク”を試す →</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <span>細かすぎて伝わらないメイク当てクイズ</span>
+  <span>Powered by <a href="https://yce.perfectcorp.com/ja?affiliate=zennfes_spring_2026" target="_blank" rel="noopener">YouCam Online Editor</a></span>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
