@@ -9,26 +9,27 @@ const $ = (s) => document.querySelector(s);
 const pct = (x) => Math.round(Math.max(0, Math.min(1, x)) * 100);
 const FIN_JP = { matte:"マット", satin:"サテン", sheer:"シアー", gloss:"グロス", shimmer:"シマー" };
 
-// look → 表示用メイクパラメータ（YouCamで実際に乗せた差分）
+// look → 表示用メイクパラメータ（YouCamで実際に効いている＝色＋質感）
+// ※ Web版は濃さ調整不可のため濃さは載せない。質感はリップのみ指定。
 function lookParams(look) {
   const ps = [];
-  if (look.lipI > 0)  ps.push({ cat:"リップ",     hex:look.lip,   tex:FIN_JP[look.lipFin]||"", val:pct(look.lipI) });
-  if (look.cheekI > 0) ps.push({ cat:"チーク",     hex:look.cheek, tex:"",                       val:pct(look.cheekI) });
-  if (look.shadow && look.shadowI > 0) ps.push({ cat:"アイシャドウ", hex:look.shadow, tex:look.shadow==="#caa15a"?"シマー":"", val:pct(look.shadowI) });
-  if (look.liner > 0) ps.push({ cat:"アイライナー", hex:"#2a2020", tex:"", val:pct(look.liner) });
-  if (look.brow > 0)  ps.push({ cat:"アイブロウ",   hex:"#5a4030", tex:"", val:pct(look.brow) });
-  if (look.glow > 0)  ps.push({ cat:"ハイライト",   hex:"#fff4ea", tex:"", val:pct(look.glow) });
+  if (look.lipI > 0)  ps.push({ cat:"リップ",     hex:look.lip,   tex:FIN_JP[look.lipFin]||"" });
+  if (look.cheekI > 0) ps.push({ cat:"チーク",     hex:look.cheek });
+  if (look.shadow && look.shadowI > 0) ps.push({ cat:"アイシャドウ", hex:look.shadow, tex:look.shadow==="#caa15a"?"シマー":"" });
+  if (look.liner > 0) ps.push({ cat:"アイライナー", hex:"#2a2020" });
+  if (look.brow > 0)  ps.push({ cat:"アイブロウ",   hex:"#5a4030" });
+  if (look.glow > 0)  ps.push({ cat:"ハイライト",   hex:"#fff4ea" });
   return ps;
 }
 function renderParams(emo) {
   const ps = lookParams(LOOK[emo]);
-  return `<p class="params-head">この顔に乗せていたメイク（YouCam）</p>` +
+  return `<p class="params-head">この顔に乗せた色（YouCamで適用）</p>` +
     ps.map((p) =>
       `<div class="param"><span class="dot" style="background:${p.hex}"></span>` +
       `<span class="pcat">${p.cat}</span>` +
-      `<span class="pval">${p.hex}${p.tex ? " / " + p.tex : ""}</span>` +
-      `<span class="pbar"><i style="width:${p.val}%"></i></span></div>`
-    ).join("");
+      `<span class="pval">${p.hex}${p.tex ? " ・ " + p.tex : ""}</span></div>`
+    ).join("") +
+    `<p class="params-foot">色は狙い値（YouCamの最寄りプリセットを適用）／濃さはYouCam既定</p>`;
 }
 const rnd = (n) => Math.floor(Math.random() * n);
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1);[a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -75,8 +76,7 @@ function renderQuestion() {
   $("#face-situation").textContent = q.label;
 
   const img = $("#face-img");
-  img.onerror = () => { img.onerror = null; img.src = q.img; $("#face-badge").textContent = "PREVIEW · YouCam"; };
-  $("#face-badge").textContent = "RETOUCH by YouCam";
+  img.onerror = () => { img.onerror = null; img.src = q.img; };
   img.src = `images/${q.imgKey}.jpg`;
 
   // 選択肢：このシチュの細かい“あるある”4つ（喜怒哀楽ラベルは出さない）

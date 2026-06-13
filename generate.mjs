@@ -53,22 +53,33 @@ function allJobs() {
 }
 
 // ---- PARAMS.md（キー不要）----
+//  ※ 出荷画像は YouCam Web版で生成。Web版は「色＋質感」のみ調整可、濃さ調整は無い。
+//    そのため濃さ数値は載せない（実際に効いていないため）。色は狙い値＝最寄りプリセットを適用。
+//    data.js LOOK の intensity は makeup-vto API を使う場合の参考値（colorIntensity）。
 function writeParams() {
   const EJ = { 喜:"🟡 喜", 怒:"🔴 怒", 哀:"🔵 哀", 楽:"🟢 楽" };
+  const FJ = { matte:"マット", satin:"サテン", sheer:"シアー", gloss:"グロス", shimmer:"シマー" };
+  const parts = (L) => {
+    const a = [];
+    if (L.lipI>0) a.push(`リップ ${L.lip}${L.lipFin?`・${FJ[L.lipFin]||L.lipFin}`:""}`);
+    if (L.cheekI>0) a.push(`チーク ${L.cheek}`);
+    if (L.shadow&&L.shadowI>0) a.push(`アイシャドウ ${L.shadow}`);
+    if (L.liner>0) a.push(`アイライナー #2a2020`);
+    if (L.brow>0) a.push(`アイブロウ #5a4030`);
+    if (L.glow>0) a.push(`ハイライト #fff4ea`);
+    return a;
+  };
   let md = `# メイク・パラメータ メモ（シチュ写真 × 気分メイク差分）
 
-> 各シチュ写真に、感情ごとの \`look\`（= makeup-vto effects）を乗せて差分を作る。
-> 画像キー: \`<situation>_<emotion>.jpg\`。intensity 0–100 / color #RRGGBB / texture はYouCamのテクスチャ名。
-> \`data.js\` の LOOK / SITUATIONS から自動生成。
+> 各シチュ写真に、感情ごとの色＋質感を YouCam で乗せて差分化（画像キー: \`<situation>_<emotion>.jpg\`）。
+> **実際に効いているのは「色（#RRGGBB）＋質感」**。色は狙い値で、YouCam Web版は最寄りプリセットを適用。
+> **濃さ（intensity）は YouCam Web版に調整機能が無いため既定値**（数値は載せない）。
+> ※ 設計上の濃さ狙い値は \`data.js\` の LOOK 参照。厳密に適用したい場合は makeup-vto API（colorIntensity）が必要。
 
-## 感情ベースのメイク（全シチュ共通の差分パラメータ）
+## 感情ベースのメイク（全シチュ共通の色＋質感）
 `;
   for (const emo of ["喜", "怒", "哀", "楽"]) {
-    const fx = lookToEffects(LOOK[emo]);
-    const line = fx.map((e) => e.palettes?.[0]
-      ? `${e.category}=${e.palettes[0].color}${e.palettes[0].texture ? `/${e.palettes[0].texture}` : ""}@${e.palettes[0].colorIntensity}`
-      : `${e.category}@${e.intensity}`).join(" · ");
-    md += `\n### ${EJ[emo]} ── ${EMO[emo].note}\n- ${line}\n`;
+    md += `\n### ${EJ[emo]} ── ${EMO[emo].note}\n- ${parts(LOOK[emo]).join(" ・ ")}\n`;
   }
   md += `\n## シチュエーション × 気分（全${SITUATIONS.length * 4}問）\n`;
   for (const s of SITUATIONS) {

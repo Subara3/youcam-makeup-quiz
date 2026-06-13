@@ -70,7 +70,7 @@ export const SITUATIONS = [
 
   { key:"namecard", label:"名刺交換", img:"assets/scene_namecard.jpg", moods:{
     喜:"相手も自分の会社を知っていた", 怒:"名前を3回続けて間違えられた",
-    哀:"名刺を切らしているのに気づいた", 楽:"同郷だと判明して場が和んだ" } },
+    哀:"渡した名刺、肩書きが異動前のままだった", 楽:"同郷だと判明して場が和んだ" } },
 
   { key:"planner", label:"手帳タイム", img:"assets/scene_planner.jpg", moods:{
     喜:"来月の連休に丸をつけた", 怒:"ダブルブッキングを発見した",
