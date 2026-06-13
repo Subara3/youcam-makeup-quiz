@@ -121,7 +121,7 @@ b{font-weight:700}
 .face{margin:0 auto clamp(14px,3vw,20px);max-width:300px}
 .face-frame{
   position:relative;border-radius:var(--r-card);overflow:hidden;
-  background:#eef1f3;box-shadow:var(--shadow);aspect-ratio:4/5;
+  background:#eef1f3;box-shadow:var(--shadow);aspect-ratio:3/4;
 }
 .face-frame::after{display:none}
 /* 画像全体を見せる（はみ出しなし・縦横比4:5に統一してレターボックス） */
