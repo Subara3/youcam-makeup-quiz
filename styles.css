@@ -29,8 +29,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 a{color:var(--blue-dark);text-underline-offset:2px}
-/* 日本語を句（文節）単位で折り返す＝語の途中で改行しない */
-.seg{display:inline-block}
+/* 日本語の折り返しを句（文節）境界で（対応ブラウザ）＋末尾の孤立行を防ぐ。spanで区切らない（吹き出し化を避ける） */
 .lede,.rule,.qnote,.qprompt,.hero figcaption,.result-msg,.reveal-note,.reveal-answer{text-wrap:pretty;word-break:auto-phrase}
 a:hover{color:var(--blue)}
 b{font-weight:700}
