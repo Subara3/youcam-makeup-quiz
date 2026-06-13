@@ -8,3 +8,5 @@ _*.png
 
 # 元データ（ルートの素材原本。サイトは assets/ images/ を使用）
 /*.jpg
+youcam_secret.txt
+youcam_pub.txt

@@ -41,6 +41,40 @@ export const LOOK = {
   楽: L({ lip:LIP.coral,   lipI:0.5,  lipFin:"sheer", cheek:CHK.natural, cheekI:0.42, shadow:SHD.none,    shadowI:0,    glow:0.52, brow:0.35, liner:0.3 }),
 };
 
+// 気分（喜怒哀楽）のジャンルは保ちつつ、シチュエーションごとに色・濃さをあえて散らす。
+// VAR=気分ごとの選択肢プール。makeupFor(sitKey,emo) が生成(yc_api)と種明かし(app.js)の単一ソース。
+const VAR = {
+  喜: { found:["#f3d3bb","#f0cdb4","#f6d4bd"], fg:[65,60,70],
+        blush:["#ef9aa6","#f0a98e","#e88a72"],
+        sh:[["#caa15a","shimmer"],["#e0a96a","shimmer"],["#d8a070","shimmer"]],
+        lip:[["#e49aa6","gloss"],["#ed9a8c","gloss"],["#ef9aa6","gloss"],["#e2785d","gloss"]], lipI:[80,84,76,82] },
+  怒: { found:["#ecd0c6","#e8ccc0"], fg:[18,15],
+        blush:["#e09a8e","#d99589"],
+        sh:[["#6f5a55","matte"],["#5a4a52","matte"],["#7a5550","matte"]],
+        lip:[["#7d2c38","matte"],["#8e4a5a","matte"],["#bb3540","matte"],["#9c3340","matte"]], lipI:[92,88,90,86] },
+  哀: { found:["#ece0da","#eaddd6"], fg:[4,6], blush:null, sh:null,
+        lip:[["#a87b78","matte"],["#b08a85","matte"],["#9c8478","sheer"],["#a87b78","sheer"]], lipI:[45,42,46,44] },
+  楽: { found:["#eec3a4","#ecc1a2"], fg:[45,42], blush:["#e09a8e","#e6a08e"], sh:null,
+        lip:[["#e2785d","sheer"],["#cd9b86","sheer"],["#e49aa6","sheer"],["#e2785d","satin"]], lipI:[62,58,64,60] },
+};
+const pick = (arr, i) => arr[((i % arr.length) + arr.length) % arr.length];
+
+// シチュ×気分のメイク（項目配列）。cat=表示名, api=APIカテゴリ, ci/cov/glow=各intensity。
+export function makeupFor(sitKey, emo) {
+  const i = Math.max(0, SITUATIONS.findIndex((s) => s.key === sitKey));
+  const v = VAR[emo], out = [];
+  out.push({ cat:"ファンデ", api:"foundation", color:pick(v.found,i), ci:43, cov: emo==="哀"?75 : emo==="怒"?55 : 45, glow:pick(v.fg,i+1) });
+  if (v.blush) out.push({ cat:"チーク", api:"blush", color:pick(v.blush,i+2), tex:"matte", ci: emo==="怒"?14 : emo==="喜"?58 : 40 });
+  if (v.sh) { const s=pick(v.sh,i+1); out.push({ cat:"アイシャドウ", api:"eye_shadow", color:s[0], tex:s[1], ci: emo==="怒"?54 : 52 }); }
+  out.push({ cat:"アイライナー", api:"eye_liner", color:"#2a2020", ci: emo==="怒" ? 60+(i%8) : 24+(i%6) });
+  out.push({ cat:"眉", api:"eyebrows", color: emo==="怒"?"#4a3328":"#5a4030", ci: emo==="怒" ? 68+(i%6) : 34+(i%8) });
+  out.push({ cat:"ハイライト", api:"highlighter", color:"#fff4ea", ci: emo==="哀"?18 : emo==="喜"?52 : 40, glow:pick(v.fg,i) });
+  const lp=pick(v.lip,i), lip={ cat:"リップ", api:"lip_color", color:lp[0], tex:lp[1], ci:pick(v.lipI,i) };
+  if (lp[1]==="gloss") { lip.gloss=65; lip.trans=15; } if (lp[1]==="sheer") { lip.trans=55; }
+  out.push(lip);
+  return out;
+}
+
 // ---- シチュエーション × 4気分 ----
 //  moods: 各感情の「あるある気分」テキスト
 export const SITUATIONS = [

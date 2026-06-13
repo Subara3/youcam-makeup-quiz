@@ -3,33 +3,24 @@
 //  シチュ写真（メイク差分）を見て、その人の「細かい“あるある”状況」を
 //  4択から当てる。喜怒哀楽のラベルは出さない（裏で効いているだけ）。
 // =============================================================
-import { QUESTIONS, SITUATIONS, EMO, EMO_ORDER, LOOK } from "./data.js";
+import { QUESTIONS, SITUATIONS, EMO, EMO_ORDER, makeupFor } from "./data.js";
 
 const $ = (s) => document.querySelector(s);
-const pct = (x) => Math.round(Math.max(0, Math.min(1, x)) * 100);
-const FIN_JP = { matte:"マット", satin:"サテン", sheer:"シアー", gloss:"グロス", shimmer:"シマー" };
+const TEX = { matte:"マット", satin:"サテン", sheer:"シアー", gloss:"グロス", shimmer:"シマー", metallic:"メタリック" };
 
-// look → 表示用メイクパラメータ（YouCamで実際に効いている＝色＋質感）
-// ※ Web版は濃さ調整不可のため濃さは載せない。質感はリップのみ指定。
-function lookParams(look) {
-  const ps = [];
-  if (look.lipI > 0)  ps.push({ cat:"リップ",     hex:look.lip,   tex:FIN_JP[look.lipFin]||"" });
-  if (look.cheekI > 0) ps.push({ cat:"チーク",     hex:look.cheek });
-  if (look.shadow && look.shadowI > 0) ps.push({ cat:"アイシャドウ", hex:look.shadow, tex:look.shadow==="#caa15a"?"シマー":"" });
-  if (look.liner > 0) ps.push({ cat:"アイライナー", hex:"#2a2020" });
-  if (look.brow > 0)  ps.push({ cat:"アイブロウ",   hex:"#5a4030" });
-  if (look.glow > 0)  ps.push({ cat:"ハイライト",   hex:"#fff4ea" });
-  return ps;
-}
-function renderParams(emo) {
-  const ps = lookParams(LOOK[emo]);
-  return `<p class="params-head">この顔に乗せた色（YouCamで適用）</p>` +
-    ps.map((p) =>
-      `<div class="param"><span class="dot" style="background:${p.hex}"></span>` +
-      `<span class="pcat">${p.cat}</span>` +
-      `<span class="pval">${p.hex}${p.tex ? " ・ " + p.tex : ""}</span></div>`
-    ).join("") +
-    `<p class="params-foot">色は狙い値（YouCamの最寄りプリセットを適用）／濃さはYouCam既定</p>`;
+// 種明かしで「実際に使ったメイク（このシチュ×気分の全パラメータ）」を表示
+function renderParams(q) {
+  const items = makeupFor(q.sitKey, q.emo);
+  return `<p class="params-head">この顔に使ったメイク（YouCam API）</p>` +
+    items.map((it) => {
+      let d;
+      if (it.api === "foundation") d = `${it.color}・カバー${it.cov}・ツヤ${it.glow}`;
+      else if (it.api === "highlighter") d = `${it.color}・ツヤ${it.glow}`;
+      else d = `${it.color}${it.tex ? "・" + (TEX[it.tex] || it.tex) : ""}・濃さ${it.ci}`;
+      return `<div class="param"><span class="dot" style="background:${it.color}"></span>` +
+        `<span class="pcat">${it.cat}</span><span class="pval">${d}</span></div>`;
+    }).join("") +
+    `<p class="params-foot">makeup-vto API で実際に指定した数値です（濃さ＝0–100）</p>`;
 }
 const rnd = (n) => Math.floor(Math.random() * n);
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1);[a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -124,7 +115,7 @@ function answer(btn, chosenEmo, q) {
   $("#reveal-verdict").className = "reveal-verdict " + (correct ? "ok" : "ng");
   $("#reveal-answer").innerHTML = `正解は<b>「${q.mood}」</b>`;
   $("#reveal-note").textContent = q.note;
-  $("#reveal-params").innerHTML = renderParams(q.emo);
+  $("#reveal-params").innerHTML = renderParams(q);
   $("#q-score").textContent = state.score;
   $("#reveal").hidden = false;
 }
