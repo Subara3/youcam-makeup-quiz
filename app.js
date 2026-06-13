@@ -108,8 +108,8 @@ function answer(btn, chosenEmo, q) {
 
   $("#reveal-verdict").textContent = correct ? "Seikai." : "Zannen…";
   $("#reveal-verdict").className = "reveal-verdict " + (correct ? "ok" : "ng");
-  $("#reveal-answer").innerHTML = `正解は<b>「${q.answerLabel || q.mood}」</b>`;
-  $("#reveal-note").textContent = `その気分、メイクにじわっと出ていました。── ${EMO[q.emo].note}`;
+  $("#reveal-answer").innerHTML = `正解は<b>「${q.mood}」</b>`;
+  $("#reveal-note").textContent = q.note;
   $("#reveal-params").innerHTML = renderParams(q.emo);
   $("#q-score").textContent = state.score;
   $("#reveal").hidden = false;
@@ -120,9 +120,9 @@ function finish() {
   let rank, msg;
   if (r === 1) { rank = "メイク読心術師"; msg = "全問正解。顔のじわじわした変化から“今日のあるある”まで言い当てる、ちょっと怖い観察眼。"; }
   else if (r >= 0.8) { rank = "気配の読める人"; msg = "ほぼ正解。リップの色温度と頬の置き方から、その人の今日が読めています。"; }
-  else if (r >= 0.5) { rank = "そこそこ察しがいい"; msg = "半分以上正解。大枠はバッチリ。あとは、じわじわした細部を。もう一度どうぞ。"; }
-  else if (r >= 0.2) { rank = "雰囲気で生きている"; msg = "雰囲気で当てにいくスタイル。でもメイクの違いは細かすぎて伝わらないので、それで正常です。"; }
-  else { rank = "今日も平常運転"; msg = "ほとんど伝わらなかった様子。タイトル回収、おめでとうございます。"; }
+  else if (r >= 0.5) { rank = "そこそこ察しがいい"; msg = "半分以上正解。ばっちりです。"; }
+  else if (r >= 0.2) { rank = "雰囲気で生きている"; msg = "雰囲気で当てにいくスタイル。でもメイクの違いは細かすぎて伝わらないので、それがフツーだと思います。"; }
+  else { rank = "今日も平常運転"; msg = "ほとんど伝わらなかった様子。"; }
 
   $("#result-rank").textContent = rank;
   $("#result-num").textContent = n;
