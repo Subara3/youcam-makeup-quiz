@@ -58,8 +58,22 @@ $("#next-btn").addEventListener("click", () => {
   else renderQuestion();
 });
 
+// 同じシチュ写真が隣り合わないよう並べ替え（直前と違うシチュを優先。残りが同シチュだけなら仕方なく許容）
+function arrangeNoRepeat(items) {
+  const pool = shuffle(items.slice());
+  const out = [];
+  let prev = null;
+  while (pool.length) {
+    let i = pool.findIndex((q) => q.sitKey !== prev);
+    if (i === -1) i = 0;
+    const [q] = pool.splice(i, 1);
+    out.push(q); prev = q.sitKey;
+  }
+  return out;
+}
+
 function startGame() {
-  state.order = shuffle(QUESTIONS.slice()).slice(0, Math.min(state.total, QUESTIONS.length));
+  state.order = arrangeNoRepeat(QUESTIONS).slice(0, Math.min(state.total, QUESTIONS.length));
   state.idx = 0; state.score = 0;
   $("#q-total").textContent = state.order.length;
   show("screen-quiz");
