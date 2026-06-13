@@ -1,22 +1,23 @@
 # メイク・パラメータ メモ（シチュ写真 × 気分メイク差分）
 
-> 各シチュ写真に、感情ごとの `look`（= makeup-vto effects）を乗せて差分を作る。
-> 画像キー: `<situation>_<emotion>.jpg`。intensity 0–100 / color #RRGGBB / texture はYouCamのテクスチャ名。
-> `data.js` の LOOK / SITUATIONS から自動生成。
+> 各シチュ写真に、感情ごとの色＋質感を YouCam で乗せて差分化（画像キー: `<situation>_<emotion>.jpg`）。
+> **実際に効いているのは「色（#RRGGBB）＋質感」**。色は狙い値で、YouCam Web版は最寄りプリセットを適用。
+> **濃さ（intensity）は YouCam Web版に調整機能が無いため既定値**（数値は載せない）。
+> ※ 設計上の濃さ狙い値は `data.js` の LOOK 参照。厳密に適用したい場合は makeup-vto API（colorIntensity）が必要。
 
-## 感情ベースのメイク（全シチュ共通の差分パラメータ）
+## 感情ベースのメイク（全シチュ共通の色＋質感）
 
 ### 🟡 喜 ── ツヤ・血色・ラメが一斉に立ち上がる、隠しきれない高揚メイク。
-- skin_smoothing@40 · blush=#ef9aa6@60 · eyeshadow=#caa15a/shimmer@50 · eyeliner=#2a2020@30 · eyebrows=#5a4030@35 · lip_color=#e49aa6/gloss@68 · highlighter=#fff4ea@78
+- リップ #e49aa6・グロス ・ チーク #ef9aa6 ・ アイシャドウ #caa15a ・ アイライナー #2a2020 ・ アイブロウ #5a4030 ・ ハイライト #fff4ea
 
 ### 🔴 怒 ── 眉とアイラインを締めて深い口紅。静かに圧をかける戦闘モード。
-- skin_smoothing@40 · blush=#e09a8e@15 · eyeshadow=#6f5a55/satin@50 · eyeliner=#2a2020@62 · eyebrows=#5a4030@68 · lip_color=#7d2c38/matte@62 · highlighter=#fff4ea@30
+- リップ #7d2c38・マット ・ チーク #e09a8e ・ アイシャドウ #6f5a55 ・ アイライナー #2a2020 ・ アイブロウ #5a4030 ・ ハイライト #fff4ea
 
 ### 🔵 哀 ── 血色を抜いてくすませた、だるさの滲むメイク。頬はあえて置かない。
-- skin_smoothing@55 · blush=#e09a8e@10 · eyeliner=#2a2020@30 · eyebrows=#5a4030@30 · lip_color=#a87b78/matte@40 · highlighter=#fff4ea@25
+- リップ #a87b78・マット ・ チーク #e09a8e ・ アイライナー #2a2020 ・ アイブロウ #5a4030 ・ ハイライト #fff4ea
 
 ### 🟢 楽 ── ナチュラルな血色と軽いツヤ。肩の力が抜けた余裕の顔。
-- skin_smoothing@40 · blush=#e09a8e@42 · eyeliner=#2a2020@30 · eyebrows=#5a4030@35 · lip_color=#e2785d/sheer@50 · highlighter=#fff4ea@52
+- リップ #e2785d・シアー ・ チーク #e09a8e ・ アイライナー #2a2020 ・ アイブロウ #5a4030 ・ ハイライト #fff4ea
 
 ## シチュエーション × 気分（全56問）
 
@@ -59,7 +60,7 @@
 ### 名刺交換（assets/scene_namecard.jpg）
 - **喜** `namecard_joy.jpg` … 相手も自分の会社を知っていた
 - **怒** `namecard_anger.jpg` … 名前を3回続けて間違えられた
-- **哀** `namecard_sorrow.jpg` … 名刺を切らしているのに気づいた
+- **哀** `namecard_sorrow.jpg` … 渡した名刺、肩書きが異動前のままだった
 - **楽** `namecard_comfort.jpg` … 同郷だと判明して場が和んだ
 
 ### 手帳タイム（assets/scene_planner.jpg）
