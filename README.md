@@ -48,4 +48,4 @@ node yc_api.mjs meeting commute  # シチュ指定
 ## ライセンス / 権利
 
 - 顔写真（`assets/scene_*` 等）は Gemini 生成。配布条件は要確認（未定）。
-- メイク画像は YouCam makeup-vto API 出力。公開条件は利用前に作者に確認のこと。
+- メイク画像は YouCam makeup-vto API 出力。公開条件は YouCam makeup-vto API（利用規約）を確認のこと。
