@@ -6,7 +6,7 @@ topics: ["youcam", "個人開発", "javascript", "api", "zennfes"]
 published: false
 ---
 
-> ZennFes Spring 2026 の参加作品です。メイク加工はすべて [YouCam オンラインエディター／API](https://yce.perfectcorp.com/ja?affiliate=zennfes_spring_2026) を使っています。
+> ZennFes Spring 2026 の参加作品です。メイク加工はすべて [YouCam](https://yce.perfectcorp.com/ja?affiliate=zennfes_spring_2026) の makeup-vto API を使っています。
 
 ## きっかけ
 
